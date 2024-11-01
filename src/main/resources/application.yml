@@ -1,0 +1,49 @@
+server:
+  port: 8888
+  forward-headers-strategy: framework
+
+spring:
+
+  application:
+    name: kilo-it
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    url: ${JDBC_URL:jdbc:mysql://localhost:3306}/${DB:e-commerce}
+    hikari:
+      connectionTimeout: 60000
+      initializationFailTimeout: 3000
+      connectionTestQuery: SELECT 1
+      validationTimeout: 60000
+      maxLifetime: 35000
+      maximumPoolSize: 30
+      minimumIdle: 10
+      idleTimeout: 30000
+      registerMbeans: false
+      poolName: service-connection-pool
+      isolate-internal-queries: true
+
+  flyway:
+    url: ${JDBC_URL:jdbc:mysql://localhost:3306}
+    schemas: ${DB:e-commerce}
+    user: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        jdbc:
+          batch_size: 100
+        order_updates: true
+        order_inserts: true
+
